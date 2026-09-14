@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Keep Off The Grass Predictions</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+    h1 { text-align: center; color: #2e7d32; }
+    .match { background: #fff; padding: 10px; margin: 10px 0; border-radius: 5px; }
+    .picked { background: #d4edda; }
+    #dashboard { margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <h1>⚽ Keep Off The Grass Predictions</h1>
+  <p style="text-align:center;">Daily soccer match tips and picks</p>
+
+  <div id="matches"></div>
+
+  <h2>Your Picks</h2>
+  <div id="dashboard"></div>
+
+  <script>
+    const sampleMatches = [
+      { id: 1, home: "Barcelona", away: "Real Madrid", time: "18:00" },
+      { id: 2, home: "Liverpool", away: "Chelsea", time: "20:00" },
+      { id: 3, home: "PSG", away: "Marseille", time: "22:00" }
+    ];
+
+    const matchesDiv = document.getElementById("matches");
+    const dashboardDiv = document.getElementById("dashboard");
+    let picks = [];
+
+    function renderMatches() {
+      matchesDiv.innerHTML = "";
+      sampleMatches.forEach(match => {
+        const div = document.createElement("div");
+        div.className = "match";
+        div.innerHTML = `
+          <strong>${match.home} vs ${match.away}</strong> 
+          <span>(${match.time})</span>
+          <button onclick="pickMatch(${match.id})">Pick</button>
+        `;
+        matchesDiv.appendChild(div);
+      });
+    }
+
+    function pickMatch(id) {
+      const match = sampleMatches.find(m => m.id === id);
+      if (!picks.includes(match)) {
+        picks.push(match);
+        renderDashboard();
+      }
+    }
+
+    function renderDashboard() {
+      dashboardDiv.innerHTML = "";
+      picks.forEach(match => {
+        const div = document.createElement("div");
+        div.className = "match picked";
+        div.innerHTML = `<strong>${match.home} vs ${match.away}</strong> (${match.time})`;
+        dashboardDiv.appendChild(div);
+      });
+    }
+
+    renderMatches();
+  </script>
+</body>
+</html>
