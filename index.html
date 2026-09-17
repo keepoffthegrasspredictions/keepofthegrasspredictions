@@ -32,9 +32,43 @@
         linear-gradient(135deg, var(--page-bg) 0%, var(--page-bg-light) 100%);
     }
 
-    body { min-height: 100vh; }
+    body {
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.10)),
+        radial-gradient(circle at center, rgba(255,255,255,0.04), transparent 46%),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 0, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 200px);
+      opacity: 0.9;
+    }
+
+    body::after {
+      content: "KEEP OFF THE GRASS";
+      position: fixed;
+      left: 50%;
+      top: 52%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(2.4rem, 5vw, 9vw);
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      color: rgba(255, 255, 255, 0.04);
+      text-transform: uppercase;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 0;
+    }
 
     .page {
+      position: relative;
+      z-index: 1;
       width: min(1180px, calc(100% - 36px));
       margin: 0 auto;
       padding: 12px 0 48px;
@@ -150,6 +184,7 @@
     }
 
     .brand-panel {
+      position: relative;
       min-height: 294px;
       padding: 20px 28px 24px;
       display: flex;
@@ -158,7 +193,20 @@
       justify-content: center;
       text-align: center;
       background: linear-gradient(145deg, rgba(12, 44, 32, 0.78), var(--panel-right));
+      overflow: hidden;
     }
+
+    .brand-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.0)),
+        radial-gradient(circle at 50% 30%, rgba(85, 232, 148, 0.12), transparent 44%);
+      pointer-events: none;
+    }
+
+    .brand-panel > * { position: relative; z-index: 1; }
 
     .brand-title {
       max-width: 560px;
