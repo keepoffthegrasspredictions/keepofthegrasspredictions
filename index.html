@@ -213,11 +213,29 @@
     }
 
     .live-tag {
-      color: var(--green-bright);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border: 1px solid rgba(126, 239, 179, 0.52);
+      border-radius: 999px;
+      background: rgba(4, 36, 22, 0.72);
+      color: #aaffcb;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      white-space: nowrap;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+    }
+
+    .live-tag::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #68f19d;
+      box-shadow: 0 0 0 3px rgba(104, 241, 157, 0.16), 0 0 10px rgba(104, 241, 157, 0.85);
     }
 
     #dashboard {
@@ -254,6 +272,7 @@
       .logo-frame { width: 190px; height: 190px; }
       .match-item { grid-template-columns: 1fr; }
       .pick-btn { justify-self: start; }
+      .picks-head { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
@@ -287,8 +306,8 @@
     </main>
 
     <section class="picks-box">
-      <div class="picks-head"><h2>Your Picks</h2><div class="live-tag">Live tracker</div></div>
-      <div id="dashboard">No picks yet — choose your matches above.</div>
+      <div class="picks-head"><h2>Predictions for Today</h2><div class="live-tag">Live tracker</div></div>
+      <div id="dashboard">No predictions yet — choose your matches above.</div>
     </section>
   </div>
 
@@ -312,7 +331,7 @@
 
     function renderDashboard() {
       if (!picks.length) {
-        dashboard.textContent = "No picks yet — choose your matches above.";
+        dashboard.textContent = "No predictions yet — choose your matches above.";
         return;
       }
       dashboard.innerHTML = "";
