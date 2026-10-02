@@ -164,9 +164,10 @@
 
     .date-btn {
       flex-shrink: 0;
+      min-width: 82px;
       border: 1px solid rgba(153,230,178,0.2);
       border-radius: 12px;
-      padding: 10px 14px;
+      padding: 10px 12px;
       background: rgba(255,255,255,0.03);
       color: var(--muted);
       font-size: 12px;
@@ -210,13 +211,32 @@
       gap: 10px;
     }
 
+    .league-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .league-badge {
+      display: inline-block;
+      width: fit-content;
+      background: rgba(85, 232, 148, 0.08);
+      border: 1px solid rgba(85, 232, 148, 0.2);
+      color: var(--green-bright);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
     .match-card {
       border: 1px solid rgba(153, 230, 178, 0.14);
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.03);
       padding: 12px 14px;
       transition: all 0.15s ease;
-      cursor: pointer;
     }
 
     .match-card:hover {
@@ -231,10 +251,10 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .live-badge {
@@ -266,17 +286,20 @@
     }
 
     .match-teams {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       align-items: center;
       gap: 10px;
     }
 
     .team {
-      flex: 1;
       font-weight: 700;
       font-size: 13px;
       color: var(--text);
+      line-height: 1.3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .team.away {
@@ -284,26 +307,12 @@
     }
 
     .match-score {
-      font-size: 16px;
+      min-width: 52px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--green-bright);
-      min-width: 45px;
       text-align: center;
       letter-spacing: -0.04em;
-    }
-
-    .league-badge {
-      display: inline-block;
-      background: rgba(85, 232, 148, 0.08);
-      border: 1px solid rgba(85, 232, 148, 0.2);
-      color: var(--green-bright);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 9px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
     }
 
     .brand-panel {
@@ -537,9 +546,12 @@
 
     .no-matches {
       text-align: center;
-      padding: 30px 20px;
+      padding: 24px 16px;
       color: var(--muted);
       font-style: italic;
+      border: 1px dashed rgba(153, 230, 178, 0.25);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
     }
 
     @media (max-width: 1024px) {
@@ -555,9 +567,10 @@
       .logo-frame { width: 190px; height: 190px; }
       .picks-head { align-items: flex-start; flex-direction: column; }
       .date-scroll { gap: 6px; }
-      .date-btn { padding: 8px 10px; font-size: 11px; }
-      .match-teams { flex-direction: column; align-items: flex-start; }
+      .date-btn { padding: 8px 10px; min-width: 72px; }
+      .match-teams { grid-template-columns: 1fr; }
       .team.away { text-align: left; }
+      .match-score { text-align: left; }
       .dashboard { grid-template-columns: 1fr; }
     }
   </style>
@@ -633,17 +646,17 @@
     const API_KEY = 'c72b0369f9388af4a2124a9486c63e63';
 
     const FALLBACK_FIXTURES = {
-      '2026-10-02': [
-        { league: 'Premier League', home: 'Manchester United', away: 'Liverpool', time: '15:00', status: 'NS', score: null },
-        { league: 'La Liga', home: 'Barcelona', away: 'Real Madrid', time: '18:00', status: 'NS', score: null },
-        { league: 'Bundesliga', home: 'Bayern Munich', away: 'Borussia Dortmund', time: '19:30', status: 'NS', score: null },
-        { league: 'Serie A', home: 'Juventus', away: 'Inter Milan', time: '20:45', status: 'NS', score: null },
-        { league: 'Ligue 1', home: 'PSG', away: 'Marseille', time: '21:00', status: 'NS', score: null }
+      today: [
+        { league: 'Premier League', home: 'Manchester United', away: 'Liverpool', time: '15:00', status: 'NS', score: null, isLive: false },
+        { league: 'La Liga', home: 'Barcelona', away: 'Real Madrid', time: '18:00', status: 'NS', score: null, isLive: false },
+        { league: 'Bundesliga', home: 'Bayern Munich', away: 'Borussia Dortmund', time: '19:30', status: 'NS', score: null, isLive: false },
+        { league: 'Serie A', home: 'Juventus', away: 'Inter Milan', time: '20:45', status: 'NS', score: null, isLive: false },
+        { league: 'Ligue 1', home: 'PSG', away: 'Marseille', time: '21:00', status: 'NS', score: null, isLive: false }
       ],
-      '2026-10-03': [
-        { league: 'Premier League', home: 'Chelsea', away: 'Arsenal', time: '14:00', status: 'NS', score: null },
-        { league: 'La Liga', home: 'Atletico Madrid', away: 'Sevilla', time: '16:15', status: 'NS', score: null },
-        { league: 'Serie A', home: 'AC Milan', away: 'Napoli', time: '18:00', status: 'NS', score: null }
+      tomorrow: [
+        { league: 'Premier League', home: 'Chelsea', away: 'Arsenal', time: '14:00', status: 'NS', score: null, isLive: false },
+        { league: 'La Liga', home: 'Atletico Madrid', away: 'Sevilla', time: '16:15', status: 'NS', score: null, isLive: false },
+        { league: 'Serie A', home: 'AC Milan', away: 'Napoli', time: '18:00', status: 'NS', score: null, isLive: false }
       ]
     };
 
@@ -654,149 +667,119 @@
     ];
 
     let allFixtures = {};
-    let selectedDate = null;
+    let selectedDateKey = null;
 
-    function getDateKey(date) {
-      return date.toISOString().slice(0, 10);
+    function getLocalDateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
     }
 
     function getDatesForWeek() {
-      const dates = [];
-      const today = new Date();
+      const days = [];
+      const base = new Date();
+      base.setHours(0, 0, 0, 0);
       for (let i = 0; i < 7; i++) {
-        const d = new Date(today);
-        d.setDate(d.getDate() + i);
-        dates.push(d);
+        const d = new Date(base);
+        d.setDate(base.getDate() + i);
+        days.push(d);
       }
-      return dates;
+      return days;
     }
 
     function formatDateButton(date) {
-      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const day = dayNames[date.getDay()];
+      const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       const dateStr = date.toLocaleDateString('en-GB', { month: 'short', day: 'numeric' });
-      return { day, date: dateStr };
+      return {
+        day: weekdays[date.getDay()],
+        date: dateStr
+      };
     }
 
-    function formatTime(timeStr) {
-      if (!timeStr) return 'TBD';
-      return timeStr.slice(0, 5);
+    function formatMatchTime(dateString) {
+      if (!dateString) return 'TBD';
+      const d = new Date(dateString);
+      if (Number.isNaN(d.getTime())) return 'TBD';
+      return d.toLocaleTimeString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      });
     }
 
-    function mapApiFixture(fixture) {
+    function normalizeFixture(fixture) {
       const status = fixture.fixture?.status?.short || 'NS';
-      const isLive = ['1H','2H','HT','ET','P','LIVE'].includes(status);
+      const isLive = ['1H', '2H', 'HT', 'ET', 'P', 'LIVE'].includes(status);
+      const score = fixture.goals && (fixture.goals.home !== null || fixture.goals.away !== null)
+        ? { home: fixture.goals.home, away: fixture.goals.away }
+        : null;
+
       return {
         league: fixture.league?.name || 'Competition',
         home: fixture.teams?.home?.name || 'Home',
         away: fixture.teams?.away?.name || 'Away',
-        time: formatTime(fixture.fixture?.date),
-        status: status,
-        score: fixture.goals ? { home: fixture.goals.home, away: fixture.goals.away } : null,
-        isLive: isLive
+        time: formatMatchTime(fixture.fixture?.date),
+        status,
+        score,
+        isLive
       };
     }
 
-    async function loadFixtures() {
-      const dates = getDatesForWeek();
-      const fixtures = {};
-
-      for (const date of dates) {
-        const dateKey = getDateKey(date);
-        fixtures[dateKey] = [];
-
-        try {
-          const response = await fetch(
-            `https://v3.football.api-sports.io/fixtures?date=${dateKey}`,
-            { headers: { 'x-apisports-key': API_KEY } }
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            if (data.response && data.response.length > 0) {
-              fixtures[dateKey] = data.response.map(mapApiFixture).sort((a, b) => {
-                const timeA = parseInt(a.time.replace(':', '')) || 2400;
-                const timeB = parseInt(b.time.replace(':', '')) || 2400;
-                return timeA - timeB;
-              });
-            } else {
-              fixtures[dateKey] = FALLBACK_FIXTURES[dateKey] || [];
-            }
-          } else {
-            fixtures[dateKey] = FALLBACK_FIXTURES[dateKey] || [];
-          }
-        } catch (error) {
-          fixtures[dateKey] = FALLBACK_FIXTURES[dateKey] || [];
-        }
-      }
-
-      allFixtures = fixtures;
-      renderDateButtons();
-      selectDate(new Date());
+    function groupMatchesByLeague(matches) {
+      const grouped = {};
+      matches.forEach((match) => {
+        if (!grouped[match.league]) grouped[match.league] = [];
+        grouped[match.league].push(match);
+      });
+      return grouped;
     }
 
     function renderDateButtons() {
-      const dateScroll = document.getElementById('dateScroll');
+      const scroll = document.getElementById('dateScroll');
       const dates = getDatesForWeek();
-      
-      dateScroll.innerHTML = dates.map((date, idx) => {
-        const dateKey = getDateKey(date);
-        const { day, date: dateStr } = formatDateButton(date);
-        const isToday = idx === 0;
+      scroll.innerHTML = dates.map(date => {
+        const key = getLocalDateKey(date);
+        const { day, date: label } = formatDateButton(date);
+        const isToday = key === getLocalDateKey(new Date());
         return `
-          <button class="date-btn${isToday ? ' active' : ''}" data-date="${dateKey}">
+          <button class="date-btn ${isToday ? 'active' : ''}" data-date="${key}">
             <span class="date-day">${day}</span>
-            <span class="date-date">${dateStr}</span>
+            <span class="date-date">${label}</span>
           </button>
         `;
       }).join('');
 
-      dateScroll.querySelectorAll('.date-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          selectDateByKey(btn.dataset.date);
-        });
+      scroll.querySelectorAll('.date-btn').forEach((button) => {
+        button.addEventListener('click', () => selectDate(button.dataset.date));
       });
     }
 
-    function selectDate(date) {
-      const dateKey = getDateKey(date);
-      selectDateByKey(dateKey);
-    }
-
-    function selectDateByKey(dateKey) {
-      selectedDate = dateKey;
-      
-      document.querySelectorAll('.date-btn').forEach(btn => {
+    function selectDate(dateKey) {
+      selectedDateKey = dateKey;
+      document.querySelectorAll('.date-btn').forEach((btn) => {
         btn.classList.toggle('active', btn.dataset.date === dateKey);
       });
-
       renderMatches(dateKey);
     }
 
     function renderMatches(dateKey) {
       const container = document.getElementById('matchesContainer');
-      const matches = allFixtures[dateKey] || [];
+      const items = allFixtures[dateKey] || [];
 
-      if (matches.length === 0) {
-        container.innerHTML = '<div class="no-matches">No matches scheduled for this date</div>';
+      if (!items.length) {
+        container.innerHTML = '<div class="no-matches">No matches scheduled for this date.</div>';
         return;
       }
 
-      const matchesByLeague = {};
-      matches.forEach(match => {
-        if (!matchesByLeague[match.league]) {
-          matchesByLeague[match.league] = [];
-        }
-        matchesByLeague[match.league].push(match);
-      });
-
-      container.innerHTML = Object.entries(matchesByLeague).map(([league, leagueMatches]) => `
-        <div>
+      const grouped = groupMatchesByLeague(items);
+      const html = Object.entries(grouped).map(([league, leagueMatches]) => `
+        <div class="league-block">
           <div class="league-badge">${league}</div>
           ${leagueMatches.map(match => `
             <div class="match-card">
               <div class="match-time">
-                ${match.isLive ? `<span class="live-badge"><span class="live-dot"></span>LIVE</span>` : match.time}
+                ${match.isLive ? '<span class="live-badge"><span class="live-dot"></span>LIVE</span>' : match.time}
               </div>
               <div class="match-teams">
                 <span class="team">${match.home}</span>
@@ -807,6 +790,48 @@
           `).join('')}
         </div>
       `).join('');
+
+      container.innerHTML = html;
+    }
+
+    async function fetchFixturesForDate(dateKey) {
+      const fallback = FALLBACK_FIXTURES.today; // default fallback until real date-specific data resolves
+      try {
+        const response = await fetch(`https://v3.football.api-sports.io/fixtures?date=${dateKey}`, {
+          headers: { 'x-apisports-key': API_KEY }
+        });
+
+        if (!response.ok) {
+          return fallback;
+        }
+
+        const data = await response.json();
+        const responseItems = Array.isArray(data.response) ? data.response : [];
+        const mapped = responseItems.map(normalizeFixture);
+        return mapped.length ? mapped : fallback;
+      } catch (error) {
+        return fallback;
+      }
+    }
+
+    async function loadWeeklyFixtures() {
+      const dates = getDatesForWeek();
+      const results = {};
+
+      for (const date of dates) {
+        const dateKey = getLocalDateKey(date);
+        const fallbackDateKey = dateKey === getLocalDateKey(new Date()) ? 'today' : 'tomorrow';
+        results[dateKey] = await fetchFixturesForDate(dateKey);
+
+        if (!results[dateKey].length && FALLBACK_FIXTURES[fallbackDateKey]) {
+          results[dateKey] = FALLBACK_FIXTURES[fallbackDateKey];
+        }
+      }
+
+      allFixtures = results;
+      const initialDate = getLocalDateKey(new Date());
+      renderDateButtons();
+      selectDate(initialDate);
     }
 
     function renderPicks() {
@@ -827,7 +852,7 @@
     }
 
     renderPicks();
-    loadFixtures();
+    loadWeeklyFixtures();
   </script>
 </body>
 </html>
