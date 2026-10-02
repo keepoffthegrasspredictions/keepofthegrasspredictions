@@ -19,6 +19,8 @@
       --shadow: rgba(0, 0, 0, 0.25);
       --live-red: #ff4b4b;
       --panel-right: rgba(18, 64, 47, 0.8);
+      --soft-panel: rgba(255,255,255,0.025);
+      --soft-panel-strong: rgba(255,255,255,0.06);
     }
 
     * { box-sizing: border-box; }
@@ -125,7 +127,8 @@
     }
 
     .fixtures-section {
-      padding: 20px;
+      padding: 18px 16px 16px;
+      background: linear-gradient(180deg, rgba(10,27,20,0.82), rgba(8,31,22,0.78));
     }
 
     .fixtures-header {
@@ -133,9 +136,9 @@
     }
 
     .fixtures-title {
-      margin: 0 0 14px;
+      margin: 0 0 12px;
       color: var(--text);
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 800;
       letter-spacing: -0.04em;
     }
@@ -164,7 +167,7 @@
 
     .date-btn {
       flex-shrink: 0;
-      min-width: 82px;
+      min-width: 84px;
       border: 1px solid rgba(153,230,178,0.2);
       border-radius: 12px;
       padding: 10px 12px;
@@ -184,7 +187,7 @@
     }
 
     .date-btn.active {
-      background: var(--green-bright);
+      background: linear-gradient(180deg, var(--green-bright), #7ef0a4);
       border-color: var(--green-bright);
       color: #042416;
       box-shadow: 0 5px 14px rgba(32, 189, 112, 0.2);
@@ -192,11 +195,11 @@
 
     .date-day {
       display: block;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
     .date-date {
@@ -208,7 +211,7 @@
     .matches-container {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .league-block {
@@ -218,7 +221,8 @@
     }
 
     .league-badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       width: fit-content;
       background: rgba(85, 232, 148, 0.08);
       border: 1px solid rgba(85, 232, 148, 0.2);
@@ -228,20 +232,20 @@
       font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
     }
 
     .match-card {
-      border: 1px solid rgba(153, 230, 178, 0.14);
+      border: 1px solid rgba(153, 230, 178, 0.12);
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 12px 14px;
+      background: var(--soft-panel);
+      padding: 11px 12px;
       transition: all 0.15s ease;
     }
 
     .match-card:hover {
       border-color: rgba(153, 230, 178, 0.34);
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--soft-panel-strong);
       transform: translateY(-1px);
     }
 
@@ -255,6 +259,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      min-height: 15px;
     }
 
     .live-badge {
@@ -738,12 +743,12 @@
     function renderDateButtons() {
       const scroll = document.getElementById('dateScroll');
       const dates = getDatesForWeek();
+      const todayKey = getLocalDateKey(new Date());
       scroll.innerHTML = dates.map(date => {
         const key = getLocalDateKey(date);
         const { day, date: label } = formatDateButton(date);
-        const isToday = key === getLocalDateKey(new Date());
         return `
-          <button class="date-btn ${isToday ? 'active' : ''}" data-date="${key}">
+          <button class="date-btn ${key === todayKey ? 'active' : ''}" data-date="${key}">
             <span class="date-day">${day}</span>
             <span class="date-date">${label}</span>
           </button>
@@ -776,18 +781,20 @@
       const html = Object.entries(grouped).map(([league, leagueMatches]) => `
         <div class="league-block">
           <div class="league-badge">${league}</div>
-          ${leagueMatches.map(match => `
-            <div class="match-card">
-              <div class="match-time">
-                ${match.isLive ? '<span class="live-badge"><span class="live-dot"></span>LIVE</span>' : match.time}
+          ${leagueMatches.map(match => {
+            const statusLabel = match.isLive ? '<span class="live-badge"><span class="live-dot"></span>LIVE</span>' : match.status === 'FT' ? 'FT' : match.status === 'NS' ? match.time : match.status;
+            const scoreValue = match.score ? `${match.score.home}-${match.score.away}` : '-';
+            return `
+              <div class="match-card">
+                <div class="match-time">${statusLabel}</div>
+                <div class="match-teams">
+                  <span class="team">${match.home}</span>
+                  <span class="match-score">${scoreValue}</span>
+                  <span class="team away">${match.away}</span>
+                </div>
               </div>
-              <div class="match-teams">
-                <span class="team">${match.home}</span>
-                <span class="match-score">${match.score ? `${match.score.home}-${match.score.away}` : '-'}</span>
-                <span class="team away">${match.away}</span>
-              </div>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
       `).join('');
 
@@ -795,7 +802,7 @@
     }
 
     async function fetchFixturesForDate(dateKey) {
-      const fallback = FALLBACK_FIXTURES.today; // default fallback until real date-specific data resolves
+      const fallback = FALLBACK_FIXTURES.today;
       try {
         const response = await fetch(`https://v3.football.api-sports.io/fixtures?date=${dateKey}`, {
           headers: { 'x-apisports-key': API_KEY }
@@ -820,7 +827,7 @@
 
       for (const date of dates) {
         const dateKey = getLocalDateKey(date);
-        const fallbackDateKey = dateKey === getLocalDateKey(new Date()) ? 'today' : 'tomorrow';
+        const fallbackDateKey = dateKey === getLocalDateKey(new Date()) ? 'today' : (date.getTime() > Date.now() ? 'tomorrow' : 'today');
         results[dateKey] = await fetchFixturesForDate(dateKey);
 
         if (!results[dateKey].length && FALLBACK_FIXTURES[fallbackDateKey]) {
