@@ -14,10 +14,14 @@
       --muted: #b5d1be;
       --green: #20bd70;
       --green-bright: #55e894;
+      --green-soft: rgba(85, 232, 148, 0.12);
       --border: rgba(153, 230, 178, 0.2);
       --shadow: rgba(0, 0, 0, 0.25);
       --live-red: #ff4b4b;
       --panel-right: rgba(18, 64, 47, 0.8);
+      --amber: #ffd76a;
+      --gold: #f7c75f;
+      --chip: rgba(255,255,255,0.08);
     }
 
     * { box-sizing: border-box; }
@@ -114,7 +118,8 @@
 
     .fixtures-box,
     .brand-panel,
-    .picks-box {
+    .picks-box,
+    .insight-card {
       border: 1px solid var(--border);
       border-radius: 16px;
       background: var(--panel);
@@ -129,6 +134,7 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 12px;
+      flex-wrap: wrap;
     }
 
     .filter-btn {
@@ -140,6 +146,12 @@
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: rgba(153,230,178,0.25);
+      color: var(--text);
     }
 
     .filter-btn.active {
@@ -227,6 +239,38 @@
       font-style: italic;
     }
 
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+      width: min(100%, 520px);
+    }
+
+    .stat-chip {
+      border: 1px solid rgba(153,230,178,0.2);
+      border-radius: 12px;
+      padding: 12px 10px;
+      background: rgba(255,255,255,0.03);
+      text-align: center;
+    }
+
+    .stat-label {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 7px;
+    }
+
+    .stat-value {
+      color: var(--text);
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
     .picks-box {
       margin-top: 16px;
       padding: 16px 18px;
@@ -237,7 +281,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 14px;
-      margin-bottom: 9px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
     }
 
     h2 {
@@ -280,19 +325,115 @@
       to { background: var(--live-red); box-shadow: 0 0 0 3px rgba(255, 75, 75, 0.22), 0 0 11px rgba(255, 75, 75, 1); }
     }
 
-    #dashboard {
-      min-height: 42px;
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .pick-card {
+      border: 1px solid rgba(153,230,178,0.2);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      padding: 16px;
+    }
+
+    .pick-top {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .league {
       color: var(--muted);
-      font-size: 15px;
-      font-style: italic;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .confidence {
+      border-radius: 999px;
+      padding: 6px 9px;
+      background: var(--green-soft);
+      border: 1px solid rgba(85,232,148,0.28);
+      color: var(--green-bright);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .fixture-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin: 0 0 12px;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .pick-result {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .score {
+      font-weight: 800;
+      font-size: 1.7rem;
+      letter-spacing: -0.05em;
+      color: var(--green-bright);
+    }
+
+    .proposition {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .insights {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .insight-card {
+      padding: 16px;
+      background: rgba(6, 19, 14, 0.48);
+    }
+
+    .insight-label {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .insight-value {
+      font-size: clamp(1.3rem, 2vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .insight-copy {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.45;
     }
 
     @media (max-width: 820px) {
       .hero { grid-template-columns: 1fr; }
       .brand-panel { min-height: 230px; }
+      .dashboard,
+      .insights { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 560px) {
@@ -312,29 +453,137 @@
 
     <main class="hero">
       <section class="fixtures-box">
-        <div class="filter-row">
+        <div class="filter-row" aria-label="Fixture filters">
           <button class="filter-btn active" type="button">Today</button>
           <button class="filter-btn" type="button">This Week</button>
           <button class="filter-btn" type="button">Live</button>
         </div>
 
-        <div class="match-list">
-          <div class="match-item"><span class="teams">Barcelona vs Real Madrid</span><span class="meta">La Liga • 18:00</span></div>
-          <div class="match-item"><span class="teams">Liverpool vs Chelsea</span><span class="meta">Premier League • 20:00</span></div>
-          <div class="match-item"><span class="teams">PSG vs Marseille</span><span class="meta">Ligue 1 • 22:00</span></div>
-        </div>
+        <div class="match-list" id="matchList"></div>
       </section>
 
       <section class="brand-panel">
         <h1 class="brand-title">Keep Off The Grass<br>Predictions</h1>
         <div class="subtitle">Daily football predictions</div>
+
+        <div class="stats-row">
+          <div class="stat-chip">
+            <span class="stat-label">Win rate</span>
+            <span class="stat-value">62%</span>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-label">This week</span>
+            <span class="stat-value">7/10</span>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-label">Hot streak</span>
+            <span class="stat-value">3</span>
+          </div>
+        </div>
       </section>
     </main>
 
     <section class="picks-box">
-      <div class="picks-head"><h2>Predictions for Today</h2><div class="live-tag">Live tracker</div></div>
-      <div id="dashboard">No predictions yet</div>
+      <div class="picks-head">
+        <h2>Predictions for Today</h2>
+        <div class="live-tag">Live tracker</div>
+      </div>
+      <div id="dashboard" class="dashboard" aria-live="polite"></div>
+
+      <div class="insights">
+        <div class="insight-card">
+          <span class="insight-label">Best value</span>
+          <div class="insight-value">Home win</div>
+          <div class="insight-copy">Madrid have won 4 of their last 5 away games against direct rivals.</div>
+        </div>
+
+        <div class="insight-card">
+          <span class="insight-label">Goal trend</span>
+          <div class="insight-value">Over 2.5</div>
+          <div class="insight-copy">The last three meetings produced 6+ goals and both teams have scored in all of them.</div>
+        </div>
+
+        <div class="insight-card">
+          <span class="insight-label">Risk level</span>
+          <div class="insight-value">Medium</div>
+          <div class="insight-copy">A strong selection, but keep an eye on team news ahead of kickoff.</div>
+        </div>
+      </div>
     </section>
   </div>
+
+  <script>
+    const fixtures = {
+      today: [
+        { teams: 'Barcelona vs Real Madrid', meta: 'La Liga • 18:00' },
+        { teams: 'Liverpool vs Chelsea', meta: 'Premier League • 20:00' },
+        { teams: 'PSG vs Marseille', meta: 'Ligue 1 • 22:00' }
+      ],
+      week: [
+        { teams: 'Juventus vs Inter', meta: 'Serie A • Wed 19:45' },
+        { teams: 'Bayern vs Dortmund', meta: 'Bundesliga • Fri 20:30' },
+        { teams: 'Arsenal vs Spurs', meta: 'Premier League • Sat 17:30' }
+      ],
+      live: [
+        { teams: 'Porto vs Benfica', meta: 'Primeira Liga • LIVE' },
+        { teams: 'Atletico vs Sevilla', meta: 'La Liga • LIVE' },
+        { teams: 'Napoli vs Fiorentina', meta: 'Serie A • LIVE' }
+      ]
+    };
+
+    const picks = [
+      { league: 'La Liga', teams: 'Barcelona vs Real Madrid', prediction: '1-2', confidence: '88%', proposition: 'Away win + BTTS' },
+      { league: 'Premier League', teams: 'Liverpool vs Chelsea', prediction: '2-1', confidence: '81%', proposition: 'Home win' },
+      { league: 'Ligue 1', teams: 'PSG vs Marseille', prediction: '3-1', confidence: '76%', proposition: 'Over 2.5 goals' },
+      { league: 'Serie A', teams: 'Juventus vs Inter', prediction: '1-1', confidence: '73%', proposition: 'Draw' },
+      { league: 'Bundesliga', teams: 'Bayern vs Dortmund', prediction: '2-2', confidence: '70%', proposition: 'Both teams to score' },
+      { league: 'Premier League', teams: 'Arsenal vs Spurs', prediction: '2-0', confidence: '79%', proposition: 'Home win' }
+    ];
+
+    const matchList = document.getElementById('matchList');
+    const dashboard = document.getElementById('dashboard');
+    const buttons = document.querySelectorAll('.filter-btn');
+
+    function renderMatches(category) {
+      matchList.innerHTML = '';
+      fixtures[category].forEach((match) => {
+        const item = document.createElement('div');
+        item.className = 'match-item';
+        item.innerHTML = `
+          <span class="teams">${match.teams}</span>
+          <span class="meta">${match.meta}</span>
+        `;
+        matchList.appendChild(item);
+      });
+    }
+
+    function renderPicks() {
+      dashboard.innerHTML = picks.slice(0, 3).map((pick) => `
+        <article class="pick-card">
+          <div class="pick-top">
+            <span class="league">${pick.league}</span>
+            <span class="confidence">${pick.confidence}</span>
+          </div>
+          <p class="fixture-title">${pick.teams}</p>
+          <div class="pick-result">
+            <span class="score">${pick.prediction}</span>
+            <span class="proposition">${pick.proposition}</span>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        buttons.forEach((btn) => btn.classList.toggle('active', btn === button));
+        const key = button.textContent.trim().toLowerCase().replace(/\s+/g, '');
+        const category = key === 'today' ? 'today' : key === 'thisweek' ? 'week' : 'live';
+        renderMatches(category);
+      });
+    });
+
+    renderMatches('today');
+    renderPicks();
+  </script>
 </body>
 </html>
