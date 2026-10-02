@@ -6,21 +6,21 @@
   <title>Keep Off The Grass Predictions</title>
   <style>
     :root {
-      --page-bg: #071f16;
-      --page-bg-light: #123f2f;
-      --panel: rgba(8, 31, 22, 0.62);
-      --panel-card: rgba(255, 255, 255, 0.055);
+      --page-bg: #0a1f1a;
+      --page-bg-light: #0f3028;
+      --panel: rgba(12, 28, 24, 0.72);
+      --panel-card: rgba(255, 255, 255, 0.04);
       --text: #f3fbf5;
-      --muted: #b5d1be;
+      --text-secondary: #d0e0d8;
+      --muted: #95b5a8;
       --green: #20bd70;
       --green-bright: #55e894;
       --green-soft: rgba(85, 232, 148, 0.12);
-      --border: rgba(153, 230, 178, 0.2);
-      --shadow: rgba(0, 0, 0, 0.25);
+      --border: rgba(85, 230, 178, 0.18);
+      --border-strong: rgba(85, 230, 178, 0.3);
+      --shadow: rgba(0, 0, 0, 0.3);
       --live-red: #ff4b4b;
-      --panel-right: rgba(18, 64, 47, 0.8);
-      --soft-panel: rgba(255,255,255,0.025);
-      --soft-panel-strong: rgba(255,255,255,0.06);
+      --panel-right: rgba(18, 64, 47, 0.9);
     }
 
     * { box-sizing: border-box; }
@@ -28,10 +28,10 @@
     html, body {
       margin: 0;
       min-height: 100%;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 50% -15%, rgba(32, 189, 112, 0.2), transparent 38%),
+        radial-gradient(circle at 50% -15%, rgba(32, 189, 112, 0.15), transparent 38%),
         linear-gradient(135deg, var(--page-bg) 0%, var(--page-bg-light) 100%);
     }
 
@@ -47,10 +47,10 @@
       inset: 0;
       pointer-events: none;
       background:
-        linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.10)),
-        radial-gradient(circle at center, rgba(255,255,255,0.04), transparent 46%),
-        linear-gradient(90deg, rgba(255,255,255,0.015) 0, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 200px);
-      opacity: 0.9;
+        linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.1)),
+        radial-gradient(circle at center, rgba(255,255,255,0.02), transparent 50%),
+        linear-gradient(90deg, rgba(255,255,255,0.01) 0, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 200px);
+      opacity: 0.8;
     }
 
     body::after {
@@ -62,7 +62,7 @@
       font-size: clamp(2.4rem, 5vw, 9vw);
       font-weight: 800;
       letter-spacing: 0.09em;
-      color: rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.03);
       text-transform: uppercase;
       white-space: nowrap;
       pointer-events: none;
@@ -72,31 +72,31 @@
     .page {
       position: relative;
       z-index: 1;
-      width: min(1280px, calc(100% - 36px));
+      width: min(1400px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 12px 0 48px;
+      padding: 16px 0 48px;
     }
 
     .header {
       display: flex;
       justify-content: center;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
     }
 
     .logo-frame {
-      width: 210px;
-      height: 210px;
-      padding: 16px;
+      width: 200px;
+      height: 200px;
+      padding: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 4px solid rgba(126, 239, 165, 0.58);
+      border: 4px solid rgba(85, 230, 178, 0.6);
       border-radius: 50%;
       background: linear-gradient(145deg, #0a5939, #159d5e 56%, #55e894);
       box-shadow:
-        0 0 0 7px rgba(32, 189, 112, 0.15),
-        0 0 28px rgba(85, 232, 148, 0.38),
-        0 18px 38px var(--shadow);
+        0 0 0 8px rgba(32, 189, 112, 0.12),
+        0 0 32px rgba(85, 232, 148, 0.35),
+        0 20px 40px var(--shadow);
     }
 
     .site-logo {
@@ -110,67 +110,71 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .fixtures-section,
-    .brand-panel,
-    .picks-box,
-    .insight-card {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: var(--panel);
-      box-shadow: 0 16px 34px var(--shadow);
-      backdrop-filter: blur(5px);
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
     }
 
     .fixtures-section {
-      padding: 18px 16px 16px;
-      background: linear-gradient(180deg, rgba(10,27,20,0.82), rgba(8,31,22,0.78));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(12, 35, 28, 0.8), rgba(10, 31, 26, 0.75));
+      box-shadow: 0 20px 40px var(--shadow);
+      backdrop-filter: blur(8px);
+      padding: 24px;
     }
 
     .fixtures-header {
-      margin-bottom: 18px;
+      margin-bottom: 24px;
     }
 
     .fixtures-title {
-      margin: 0 0 12px;
+      margin: 0 0 18px;
       color: var(--text);
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       font-weight: 800;
       letter-spacing: -0.04em;
     }
 
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
     .date-scroll {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       overflow-x: auto;
       padding-bottom: 8px;
       scroll-behavior: smooth;
+      flex: 1;
+      min-width: 0;
     }
 
     .date-scroll::-webkit-scrollbar {
-      height: 4px;
+      height: 5px;
     }
 
     .date-scroll::-webkit-scrollbar-track {
       background: rgba(255,255,255,0.05);
-      border-radius: 2px;
+      border-radius: 3px;
     }
 
     .date-scroll::-webkit-scrollbar-thumb {
-      background: rgba(85,232,148,0.3);
-      border-radius: 2px;
+      background: rgba(85,232,148,0.35);
+      border-radius: 3px;
     }
 
     .date-btn {
       flex-shrink: 0;
-      min-width: 84px;
-      border: 1px solid rgba(153,230,178,0.2);
-      border-radius: 12px;
-      padding: 10px 12px;
+      min-width: 90px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
       background: rgba(255,255,255,0.03);
       color: var(--muted);
       font-size: 12px;
@@ -182,15 +186,15 @@
     }
 
     .date-btn:hover {
-      border-color: rgba(153,230,178,0.4);
-      background: rgba(255,255,255,0.06);
+      border-color: var(--border-strong);
+      background: rgba(255,255,255,0.08);
     }
 
     .date-btn.active {
       background: linear-gradient(180deg, var(--green-bright), #7ef0a4);
       border-color: var(--green-bright);
       color: #042416;
-      box-shadow: 0 5px 14px rgba(32, 189, 112, 0.2);
+      box-shadow: 0 6px 16px rgba(32, 189, 112, 0.25);
     }
 
     .date-day {
@@ -199,7 +203,7 @@
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     .date-date {
@@ -208,66 +212,129 @@
       font-weight: 700;
     }
 
+    .toggle-all {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .toggle-all:hover {
+      border-color: var(--border-strong);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .toggle-all.active {
+      background: rgba(85, 232, 148, 0.15);
+      border-color: var(--green-bright);
+      color: var(--green-bright);
+    }
+
+    .league-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .league-filter {
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.02);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .league-filter:hover {
+      border-color: var(--border-strong);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .league-filter.active {
+      background: rgba(85, 232, 148, 0.2);
+      border-color: var(--green-bright);
+      color: var(--green-bright);
+    }
+
     .matches-container {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 2px;
     }
 
     .league-block {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0;
     }
 
-    .league-badge {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      background: rgba(85, 232, 148, 0.08);
-      border: 1px solid rgba(85, 232, 148, 0.2);
+    .league-header {
+      display: inline-block;
+      background: rgba(85, 232, 148, 0.12);
+      border: 1px solid rgba(85, 232, 148, 0.25);
+      border-radius: 8px;
       color: var(--green-bright);
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 9px;
-      font-weight: 700;
+      padding: 6px 10px;
+      font-size: 10px;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.07em;
+      margin-bottom: 8px;
+      width: fit-content;
     }
 
     .match-card {
-      border: 1px solid rgba(153, 230, 178, 0.12);
-      border-radius: 12px;
-      background: var(--soft-panel);
-      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 14px 16px;
       transition: all 0.15s ease;
+      margin-bottom: 8px;
     }
 
     .match-card:hover {
-      border-color: rgba(153, 230, 178, 0.34);
-      background: var(--soft-panel-strong);
-      transform: translateY(-1px);
+      border-color: var(--border-strong);
+      background: rgba(255, 255, 255, 0.05);
     }
 
-    .match-time {
+    .match-header {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .match-status {
       color: var(--muted);
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 15px;
     }
 
     .live-badge {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 3px 7px;
-      border-radius: 999px;
+      gap: 5px;
+      padding: 4px 8px;
+      border-radius: 6px;
       background: rgba(255, 75, 75, 0.15);
       border: 1px solid rgba(255, 75, 75, 0.4);
       color: #ffb0b0;
@@ -290,16 +357,16 @@
       to { background: var(--live-red); }
     }
 
-    .match-teams {
+    .match-row {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
     }
 
     .team {
       font-weight: 700;
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text);
       line-height: 1.3;
       overflow: hidden;
@@ -312,24 +379,89 @@
     }
 
     .match-score {
-      min-width: 52px;
-      font-size: 15px;
-      font-weight: 800;
+      min-width: 60px;
+      font-size: 18px;
+      font-weight: 900;
       color: var(--green-bright);
       text-align: center;
       letter-spacing: -0.04em;
     }
 
+    .prediction-buttons {
+      display: flex;
+      gap: 6px;
+    }
+
+    .pred-btn {
+      min-width: 44px;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .pred-btn:hover {
+      border-color: var(--border-strong);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .pred-btn.selected {
+      background: var(--green-bright);
+      border-color: var(--green-bright);
+      color: #042416;
+      box-shadow: 0 4px 12px rgba(85, 232, 148, 0.25);
+    }
+
+    .odds-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .odd {
+      text-align: center;
+    }
+
+    .odd-label {
+      display: block;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 3px;
+    }
+
+    .odd-value {
+      display: block;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
     .brand-panel {
       position: relative;
-      min-height: 294px;
-      padding: 20px 28px 24px;
+      min-height: 280px;
+      padding: 24px 28px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      background: linear-gradient(145deg, rgba(12, 44, 32, 0.78), var(--panel-right));
+      background: linear-gradient(145deg, rgba(12, 44, 32, 0.8), var(--panel-right));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px var(--shadow);
       overflow: hidden;
     }
 
@@ -339,7 +471,7 @@
       inset: 0;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.0)),
-        radial-gradient(circle at 50% 30%, rgba(85, 232, 148, 0.12), transparent 44%);
+        radial-gradient(circle at 50% 30%, rgba(85, 232, 148, 0.12), transparent 50%);
       pointer-events: none;
     }
 
@@ -349,32 +481,33 @@
       max-width: 560px;
       margin: 0;
       color: var(--green-bright);
-      font-size: clamp(2.6rem, 4vw, 4.3rem);
-      line-height: 0.94;
+      font-size: clamp(2.4rem, 4vw, 4rem);
+      line-height: 0.95;
       letter-spacing: -0.055em;
       font-weight: 800;
-      text-shadow: 0 4px 20px rgba(32, 189, 112, 0.14);
+      text-shadow: 0 4px 20px rgba(32, 189, 112, 0.12);
       text-wrap: balance;
     }
 
     .subtitle {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 15px;
+      margin-top: 12px;
+      color: var(--text-secondary);
+      font-size: 14px;
       font-style: italic;
+      font-weight: 500;
     }
 
     .stats-row {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 16px;
-      width: min(100%, 520px);
+      gap: 14px;
+      margin-top: 18px;
+      width: min(100%, 480px);
     }
 
     .stat-chip {
-      border: 1px solid rgba(153,230,178,0.2);
-      border-radius: 12px;
+      border: 1px solid rgba(85,230,178,0.2);
+      border-radius: 10px;
       padding: 12px 10px;
       background: rgba(255,255,255,0.03);
       text-align: center;
@@ -383,78 +516,84 @@
     .stat-label {
       display: block;
       color: var(--muted);
-      font-size: 10px;
+      font-size: 9px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-bottom: 7px;
+      font-weight: 700;
+      margin-bottom: 6px;
     }
 
     .stat-value {
       color: var(--text);
-      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-size: clamp(1.3rem, 2vw, 1.7rem);
       font-weight: 800;
       letter-spacing: -0.04em;
     }
 
     .picks-box {
-      margin-top: 16px;
-      padding: 16px 18px;
-      grid-column: 1 / -1;
+      margin-top: 20px;
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(12, 35, 28, 0.8), rgba(10, 31, 26, 0.75));
+      box-shadow: 0 20px 40px var(--shadow);
+      backdrop-filter: blur(8px);
     }
 
     .picks-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 14px;
+      gap: 16px;
+      margin-bottom: 16px;
       flex-wrap: wrap;
     }
 
     h2 {
       margin: 0;
       color: var(--text);
-      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
       line-height: 1;
-      letter-spacing: -0.05em;
+      letter-spacing: -0.04em;
+      font-weight: 800;
     }
 
     .live-tag {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 7px 11px;
-      border: 1px solid rgba(255, 75, 75, 0.85);
-      border-radius: 999px;
-      background: rgba(122, 16, 16, 0.7);
+      gap: 6px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 75, 75, 0.7);
+      border-radius: 8px;
+      background: rgba(255, 75, 75, 0.1);
       color: #ffb0b0;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       white-space: nowrap;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     .live-tag::before {
       content: "";
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: #fff;
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18), 0 0 9px rgba(255, 75, 75, 0.95);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15), 0 0 8px rgba(255, 75, 75, 0.9);
       animation: live-pulse 1s infinite alternate;
     }
 
     .dashboard {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+      gap: 16px;
     }
 
     .pick-card {
-      border: 1px solid rgba(153,230,178,0.2);
-      border-radius: 14px;
+      border: 1px solid rgba(85,230,178,0.2);
+      border-radius: 12px;
       background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
       padding: 16px;
     }
@@ -469,28 +608,28 @@
 
     .league {
       color: var(--muted);
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .confidence {
-      border-radius: 999px;
-      padding: 6px 9px;
+      border-radius: 6px;
+      padding: 5px 9px;
       background: var(--green-soft);
-      border: 1px solid rgba(85,232,148,0.28);
+      border: 1px solid rgba(85,232,148,0.3);
       color: var(--green-bright);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
     }
 
     .fixture-title {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 800;
-      margin: 0 0 12px;
+      margin: 0 0 10px;
       color: var(--text);
-      line-height: 1.25;
+      line-height: 1.3;
     }
 
     .pick-result {
@@ -503,14 +642,14 @@
 
     .score {
       font-weight: 800;
-      font-size: 1.7rem;
-      letter-spacing: -0.05em;
+      font-size: 1.6rem;
+      letter-spacing: -0.04em;
       color: var(--green-bright);
     }
 
     .proposition {
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
     }
 
@@ -518,65 +657,75 @@
       margin-top: 20px;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+      gap: 16px;
     }
 
     .insight-card {
       padding: 16px;
-      background: rgba(6, 19, 14, 0.48);
+      background: rgba(6, 19, 14, 0.5);
+      border: 1px solid rgba(85,230,178,0.15);
+      border-radius: 12px;
     }
 
     .insight-label {
       display: block;
       color: var(--muted);
-      font-size: 10px;
+      font-size: 9px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .insight-value {
-      font-size: clamp(1.3rem, 2vw, 2rem);
       font-weight: 800;
-      letter-spacing: -0.04em;
-      color: var(--text);
       margin-bottom: 8px;
     }
 
+    .insight-value {
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
     .insight-copy {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.45;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
 
     .no-matches {
       text-align: center;
-      padding: 24px 16px;
+      padding: 32px 20px;
       color: var(--muted);
       font-style: italic;
-      border: 1px dashed rgba(153, 230, 178, 0.25);
+      border: 1px dashed rgba(85, 230, 178, 0.25);
       border-radius: 12px;
-      background: rgba(255,255,255,0.02);
+      background: rgba(255,255,255,0.01);
     }
 
-    @media (max-width: 1024px) {
-      .hero { grid-template-columns: 1fr; }
-      .brand-panel { min-height: 230px; }
-      .dashboard,
-      .insights { grid-template-columns: 1fr; }
-      .stats-row { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 560px) {
-      .page { width: min(100% - 24px, 1280px); padding-top: 18px; }
-      .logo-frame { width: 190px; height: 190px; }
-      .picks-head { align-items: flex-start; flex-direction: column; }
-      .date-scroll { gap: 6px; }
-      .date-btn { padding: 8px 10px; min-width: 72px; }
-      .match-teams { grid-template-columns: 1fr; }
-      .team.away { text-align: left; }
-      .match-score { text-align: left; }
+    @media (max-width: 1200px) {
       .dashboard { grid-template-columns: 1fr; }
+      .insights { grid-template-columns: 1fr; }
+      .match-row { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+      .prediction-buttons { flex-direction: column; }
+    }
+
+    @media (max-width: 768px) {
+      .page { width: min(100% - 20px, 1400px); }
+      .fixtures-section { padding: 18px 14px; }
+      .picks-box { padding: 16px 14px; }
+      .logo-frame { width: 180px; height: 180px; }
+      .fixtures-title { font-size: 1.4rem; }
+      .controls-row { gap: 12px; }
+      .date-scroll { gap: 8px; }
+      .date-btn { min-width: 80px; padding: 8px 10px; }
+      .league-filters { gap: 6px; }
+      .league-filter { padding: 6px 10px; font-size: 10px; }
+      .match-header { grid-template-columns: 1fr auto; }
+      .match-row { grid-template-columns: 1fr auto 1fr; }
+      .prediction-buttons { flex-wrap: wrap; }
+      .pred-btn { min-width: 40px; padding: 7px 8px; font-size: 11px; }
+      .odds-row { grid-template-columns: 1fr auto 1fr; }
+      .stats-row { grid-template-columns: 1fr; }
+      h2 { font-size: 1.4rem; }
     }
   </style>
 </head>
@@ -591,9 +740,13 @@
     <main class="hero">
       <section class="fixtures-section">
         <div class="fixtures-header">
-          <h2 class="fixtures-title">Fixtures</h2>
-          <div class="date-scroll" id="dateScroll"></div>
+          <h2 class="fixtures-title">Fixtures & Predictions</h2>
+          <div class="controls-row">
+            <div class="date-scroll" id="dateScroll"></div>
+            <button class="toggle-all active" id="toggleAll">Show All</button>
+          </div>
         </div>
+        <div class="league-filters" id="leagueFilters"></div>
         <div class="matches-container" id="matchesContainer"></div>
       </section>
 
@@ -620,7 +773,7 @@
 
     <section class="picks-box">
       <div class="picks-head">
-        <h2>Predictions for Today</h2>
+        <h2>Featured Picks</h2>
         <div class="live-tag">Live tracker</div>
       </div>
       <div id="dashboard" class="dashboard" aria-live="polite"></div>
@@ -652,27 +805,28 @@
 
     const FALLBACK_FIXTURES = {
       today: [
-        { league: 'Premier League', home: 'Manchester United', away: 'Liverpool', time: '15:00', status: 'NS', score: null, isLive: false },
-        { league: 'La Liga', home: 'Barcelona', away: 'Real Madrid', time: '18:00', status: 'NS', score: null, isLive: false },
-        { league: 'Bundesliga', home: 'Bayern Munich', away: 'Borussia Dortmund', time: '19:30', status: 'NS', score: null, isLive: false },
-        { league: 'Serie A', home: 'Juventus', away: 'Inter Milan', time: '20:45', status: 'NS', score: null, isLive: false },
-        { league: 'Ligue 1', home: 'PSG', away: 'Marseille', time: '21:00', status: 'NS', score: null, isLive: false }
-      ],
-      tomorrow: [
-        { league: 'Premier League', home: 'Chelsea', away: 'Arsenal', time: '14:00', status: 'NS', score: null, isLive: false },
-        { league: 'La Liga', home: 'Atletico Madrid', away: 'Sevilla', time: '16:15', status: 'NS', score: null, isLive: false },
-        { league: 'Serie A', home: 'AC Milan', away: 'Napoli', time: '18:00', status: 'NS', score: null, isLive: false }
+        { league: 'Serie B', home: 'Novorzevinao', away: 'Golas', time: 'FT', status: 'FT', score: { home: 3, away: 0 }, isLive: false, odds: { home: 1.85, draw: 3.20, away: 4.50 } },
+        { league: 'Serie B', home: 'São Bernardo', away: 'CRB', time: '20:39', status: 'NS', score: null, isLive: false, odds: { home: 2.10, draw: 3.10, away: 3.80 } },
+        { league: 'Serie B', home: 'Londrina', away: 'Cricuma', time: '21:30', status: 'NS', score: null, isLive: false, odds: { home: 1.95, draw: 3.30, away: 4.10 } },
+        { league: 'Serie B', home: 'Juventude', away: 'Operario-PR', time: '21:45', status: 'NS', score: null, isLive: false, odds: { home: 2.05, draw: 3.20, away: 3.85 } },
+        { league: 'Primeira División', home: 'Inca Aruba', away: 'Municipal Limeiño', time: 'FT', status: 'FT', score: { home: 2, away: 1 }, isLive: false, odds: { home: 1.90, draw: 3.25, away: 4.20 } },
+        { league: 'CONCACAF Nations League', home: 'Cayman Islands', away: 'Puerto Rico', time: 'FT', status: 'FT', score: { home: 0, away: 3 }, isLive: false, odds: { home: 1.55, draw: 4.00, away: 5.80 } },
+        { league: 'CONCACAF Nations League', home: 'Dominican Republic', away: 'Haiti', time: 'FT', status: 'FT', score: { home: 1, away: 4 }, isLive: false, odds: { home: 1.72, draw: 3.50, away: 5.10 } },
+        { league: 'CONCACAF Nations League', home: 'Nicaragua', away: 'Costa Rica', time: 'FT', status: 'FT', score: { home: 0, away: 3 }, isLive: false, odds: { home: 1.48, draw: 4.20, away: 6.50 } }
       ]
     };
 
     const PICKS = [
-      { league: 'La Liga', teams: 'Barcelona vs Real Madrid', prediction: '1-2', confidence: '88%', proposition: 'Away win + BTTS' },
-      { league: 'Premier League', teams: 'Liverpool vs Chelsea', prediction: '2-1', confidence: '81%', proposition: 'Home win' },
-      { league: 'Ligue 1', teams: 'PSG vs Marseille', prediction: '3-1', confidence: '76%', proposition: 'Over 2.5 goals' }
+      { league: 'La Liga', teams: 'Barcelona vs Real Madrid', prediction: '1-2', confidence: '88%', proposition: 'Away win' },
+      { league: 'Premier League', teams: 'Liverpool vs Chelsea', prediction: '1', confidence: '81%', proposition: 'Home win' },
+      { league: 'Ligue 1', teams: 'PSG vs Marseille', prediction: 'Over 2.5', confidence: '76%', proposition: 'Goals' }
     ];
 
     let allFixtures = {};
     let selectedDateKey = null;
+    let visibleLeagues = new Set();
+    let allLeagues = new Set();
+    let userPredictions = {};
 
     function getLocalDateKey(date) {
       const year = date.getFullYear();
@@ -696,29 +850,21 @@
     function formatDateButton(date) {
       const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       const dateStr = date.toLocaleDateString('en-GB', { month: 'short', day: 'numeric' });
-      return {
-        day: weekdays[date.getDay()],
-        date: dateStr
-      };
+      return { day: weekdays[date.getDay()], date: dateStr };
     }
 
     function formatMatchTime(dateString) {
       if (!dateString) return 'TBD';
       const d = new Date(dateString);
       if (Number.isNaN(d.getTime())) return 'TBD';
-      return d.toLocaleTimeString('en-GB', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-      });
+      return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
     }
 
     function normalizeFixture(fixture) {
       const status = fixture.fixture?.status?.short || 'NS';
       const isLive = ['1H', '2H', 'HT', 'ET', 'P', 'LIVE'].includes(status);
       const score = fixture.goals && (fixture.goals.home !== null || fixture.goals.away !== null)
-        ? { home: fixture.goals.home, away: fixture.goals.away }
-        : null;
+        ? { home: fixture.goals.home, away: fixture.goals.away } : null;
 
       return {
         league: fixture.league?.name || 'Competition',
@@ -727,7 +873,8 @@
         time: formatMatchTime(fixture.fixture?.date),
         status,
         score,
-        isLive
+        isLive,
+        odds: { home: 1.95, draw: 3.20, away: 4.00 }
       };
     }
 
@@ -760,6 +907,21 @@
       });
     }
 
+    function renderLeagueFilters() {
+      const container = document.getElementById('leagueFilters');
+      container.innerHTML = Array.from(allLeagues).sort().map(league => `
+        <button class="league-filter active" data-league="${league}">${league}</button>
+      `).join('');
+
+      container.querySelectorAll('.league-filter').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('active');
+          visibleLeagues[btn.classList.contains('active') ? 'add' : 'delete'](btn.dataset.league);
+          renderMatches(selectedDateKey);
+        });
+      });
+    }
+
     function selectDate(dateKey) {
       selectedDateKey = dateKey;
       document.querySelectorAll('.date-btn').forEach((btn) => {
@@ -777,20 +939,47 @@
         return;
       }
 
-      const grouped = groupMatchesByLeague(items);
+      const visibleItems = items.filter(m => visibleLeagues.size === 0 || visibleLeagues.has(m.league));
+      const grouped = groupMatchesByLeague(visibleItems);
+
       const html = Object.entries(grouped).map(([league, leagueMatches]) => `
         <div class="league-block">
-          <div class="league-badge">${league}</div>
-          ${leagueMatches.map(match => {
-            const statusLabel = match.isLive ? '<span class="live-badge"><span class="live-dot"></span>LIVE</span>' : match.status === 'FT' ? 'FT' : match.status === 'NS' ? match.time : match.status;
+          <div class="league-header">${league}</div>
+          ${leagueMatches.map((match, idx) => {
+            const matchKey = `${dateKey}-${league}-${idx}`;
+            const pred = userPredictions[matchKey];
+            const statusLabel = match.isLive ? '<span class="live-badge"><span class="live-dot"></span>LIVE</span>' : match.status === 'FT' ? 'FT' : match.time;
             const scoreValue = match.score ? `${match.score.home}-${match.score.away}` : '-';
+
             return `
               <div class="match-card">
-                <div class="match-time">${statusLabel}</div>
-                <div class="match-teams">
+                <div class="match-header">
+                  <div class="match-status">${statusLabel}</div>
+                </div>
+                <div class="match-row">
                   <span class="team">${match.home}</span>
                   <span class="match-score">${scoreValue}</span>
                   <span class="team away">${match.away}</span>
+                  <div class="prediction-buttons">
+                    <button class="pred-btn ${pred === '1' ? 'selected' : ''}" data-key="${matchKey}" data-pred="1">1</button>
+                    <button class="pred-btn ${pred === 'X' ? 'selected' : ''}" data-key="${matchKey}" data-pred="X">X</button>
+                    <button class="pred-btn ${pred === '2' ? 'selected' : ''}" data-key="${matchKey}" data-pred="2">2</button>
+                  </div>
+                </div>
+                <div class="odds-row">
+                  <div class="odd">
+                    <span class="odd-label">Home</span>
+                    <span class="odd-value">${match.odds.home.toFixed(2)}</span>
+                  </div>
+                  <div></div>
+                  <div class="odd">
+                    <span class="odd-label">Draw</span>
+                    <span class="odd-value">${match.odds.draw.toFixed(2)}</span>
+                  </div>
+                  <div class="odd">
+                    <span class="odd-label">Away</span>
+                    <span class="odd-value">${match.odds.away.toFixed(2)}</span>
+                  </div>
                 </div>
               </div>
             `;
@@ -799,6 +988,19 @@
       `).join('');
 
       container.innerHTML = html;
+
+      container.querySelectorAll('.pred-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const key = btn.dataset.key;
+          const pred = btn.dataset.pred;
+          if (userPredictions[key] === pred) {
+            delete userPredictions[key];
+          } else {
+            userPredictions[key] = pred;
+          }
+          renderMatches(dateKey);
+        });
+      });
     }
 
     async function fetchFixturesForDate(dateKey) {
@@ -808,10 +1010,7 @@
           headers: { 'x-apisports-key': API_KEY }
         });
 
-        if (!response.ok) {
-          return fallback;
-        }
-
+        if (!response.ok) return fallback;
         const data = await response.json();
         const responseItems = Array.isArray(data.response) ? data.response : [];
         const mapped = responseItems.map(normalizeFixture);
@@ -827,17 +1026,33 @@
 
       for (const date of dates) {
         const dateKey = getLocalDateKey(date);
-        const fallbackDateKey = dateKey === getLocalDateKey(new Date()) ? 'today' : (date.getTime() > Date.now() ? 'tomorrow' : 'today');
         results[dateKey] = await fetchFixturesForDate(dateKey);
-
-        if (!results[dateKey].length && FALLBACK_FIXTURES[fallbackDateKey]) {
-          results[dateKey] = FALLBACK_FIXTURES[fallbackDateKey];
+        if (!results[dateKey].length) {
+          results[dateKey] = dateKey === getLocalDateKey(new Date()) ? FALLBACK_FIXTURES.today : [];
         }
+        results[dateKey].forEach(m => allLeagues.add(m.league));
       }
 
       allFixtures = results;
-      const initialDate = getLocalDateKey(new Date());
+      visibleLeagues = new Set(allLeagues);
+
       renderDateButtons();
+      renderLeagueFilters();
+
+      document.getElementById('toggleAll').addEventListener('click', function() {
+        this.classList.toggle('active');
+        if (this.classList.contains('active')) {
+          visibleLeagues = new Set(allLeagues);
+        } else {
+          visibleLeagues.clear();
+        }
+        document.querySelectorAll('.league-filter').forEach(btn => {
+          btn.classList.toggle('active', visibleLeagues.has(btn.dataset.league));
+        });
+        renderMatches(selectedDateKey);
+      });
+
+      const initialDate = getLocalDateKey(new Date());
       selectDate(initialDate);
     }
 
