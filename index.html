@@ -513,7 +513,9 @@
   </div>
 
   <script>
-    const fixtures = {
+    const API_KEY = 'c72b0369f9388af4a2124a9486c63e63';
+
+    const FALLBACK_FIXTURES = {
       today: [
         { teams: 'Barcelona vs Real Madrid', meta: 'La Liga • 18:00' },
         { teams: 'Liverpool vs Chelsea', meta: 'Premier League • 20:00' },
@@ -531,22 +533,97 @@
       ]
     };
 
-    const picks = [
+    const PICKS = [
       { league: 'La Liga', teams: 'Barcelona vs Real Madrid', prediction: '1-2', confidence: '88%', proposition: 'Away win + BTTS' },
       { league: 'Premier League', teams: 'Liverpool vs Chelsea', prediction: '2-1', confidence: '81%', proposition: 'Home win' },
-      { league: 'Ligue 1', teams: 'PSG vs Marseille', prediction: '3-1', confidence: '76%', proposition: 'Over 2.5 goals' },
-      { league: 'Serie A', teams: 'Juventus vs Inter', prediction: '1-1', confidence: '73%', proposition: 'Draw' },
-      { league: 'Bundesliga', teams: 'Bayern vs Dortmund', prediction: '2-2', confidence: '70%', proposition: 'Both teams to score' },
-      { league: 'Premier League', teams: 'Arsenal vs Spurs', prediction: '2-0', confidence: '79%', proposition: 'Home win' }
+      { league: 'Ligue 1', teams: 'PSG vs Marseille', prediction: '3-1', confidence: '76%', proposition: 'Over 2.5 goals' }
     ];
 
     const matchList = document.getElementById('matchList');
     const dashboard = document.getElementById('dashboard');
     const buttons = document.querySelectorAll('.filter-btn');
+    let fixtureState = { today: [], week: [], live: [] };
+
+    function formatKickoff(dateString, timezone) {
+      const date = new Date(dateString);
+      if (Number.isNaN(date.getTime())) return 'TBD';
+      return new Intl.DateTimeFormat('en-GB', {
+        weekday: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: timezone || 'UTC'
+      }).format(date);
+    }
+
+    function mapFixtureToCard(item) {
+      const league = item.league?.name || 'Top Competition';
+      const home = item.teams?.home?.name || 'Home';
+      const away = item.teams?.away?.name || 'Away';
+      const kickoff = item.fixture?.date ? formatKickoff(item.fixture.date, item.fixture.timezone) : 'TBD';
+      const status = item.fixture?.status?.short || 'NS';
+      const isLive = ['1H','2H','HT','ET','P','LIVE'].includes(status);
+      return {
+        teams: `${home} vs ${away}`,
+        meta: `${league} • ${isLive ? 'LIVE' : kickoff}`
+      };
+    }
+
+    function normalizeApiFixtures(fixtures) {
+      const today = [];
+      const live = [];
+      const week = [];
+
+      fixtures.forEach((item) => {
+        const card = mapFixtureToCard(item);
+        const status = item.fixture?.status?.short || 'NS';
+        if (['1H','2H','HT','ET','P','LIVE'].includes(status)) {
+          live.push(card);
+        } else if (new Date(item.fixture.date) > new Date()) {
+          const diffDays = Math.ceil((new Date(item.fixture.date) - new Date()) / 86400000);
+          if (diffDays <= 7) {
+            week.push(card);
+          }
+          today.push(card);
+        }
+      });
+
+      return {
+        today: today.slice(0, 6),
+        week: week.slice(0, 6),
+        live: live.slice(0, 6)
+      };
+    }
+
+    async function loadFixtures() {
+      try {
+        const today = new Date().toISOString().slice(0, 10);
+        const response = await fetch(`https://v3.football.api-sports.io/fixtures?date=${today}`, {
+          headers: { 'x-apisports-key': API_KEY }
+        });
+
+        if (!response.ok) {
+          throw new Error('API request failed');
+        }
+
+        const data = await response.json();
+        const normalized = normalizeApiFixtures(data.response || []);
+        fixtureState = {
+          today: normalized.today.length ? normalized.today : FALLBACK_FIXTURES.today,
+          week: normalized.week.length ? normalized.week : FALLBACK_FIXTURES.week,
+          live: normalized.live.length ? normalized.live : FALLBACK_FIXTURES.live
+        };
+        renderMatches('today');
+      } catch (error) {
+        fixtureState = FALLBACK_FIXTURES;
+        renderMatches('today');
+      }
+    }
 
     function renderMatches(category) {
+      const items = fixtureState[category] || FALLBACK_FIXTURES[category] || [];
       matchList.innerHTML = '';
-      fixtures[category].forEach((match) => {
+
+      items.slice(0, 6).forEach((match) => {
         const item = document.createElement('div');
         item.className = 'match-item';
         item.innerHTML = `
@@ -558,7 +635,7 @@
     }
 
     function renderPicks() {
-      dashboard.innerHTML = picks.slice(0, 3).map((pick) => `
+      dashboard.innerHTML = PICKS.map((pick) => `
         <article class="pick-card">
           <div class="pick-top">
             <span class="league">${pick.league}</span>
@@ -582,8 +659,8 @@
       });
     });
 
-    renderMatches('today');
     renderPicks();
+    loadFixtures();
   </script>
 </body>
 </html>
